@@ -1,0 +1,30 @@
+<html>
+<%- include("./partials/head.ejs") %>
+
+<body>
+    <%- include("./partials/nav.ejs") %>
+    <div class= "details content">
+        <h2><%= note.title %></h2>
+        <div class="content">
+            <p><%= note.body %></p>
+        </div>
+        <a class="delete" data-doc="<%= note._id %>">delete</a>
+    </div>
+    <%- include("./partials/footer.ejs") %>
+
+    <script>
+        const trash = document.querySelector('a.delete');
+
+        trash.addEventListener('click', (e) => {
+            const endpoint = `/notes/${trash.dataset.doc}`;
+
+            fetch(endpoint, {
+                method: 'DELETE'
+            })
+            .then((response) => response.json())
+            .then((data) => window.location.href = data.redirect)
+            .catch(err => console.log(err));
+        })
+    </script>
+</body>
+</html>
