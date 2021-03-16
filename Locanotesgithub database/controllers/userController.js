@@ -21,6 +21,17 @@ const user_create = (req, res) => {
         })
 }
 
+const user_index = (req, res) => {
+    mongoUser.find().sort({ createdAt: -1 })
+        .then(result => {
+            res.send(result);
+        })
+        .catch(error => {
+            res.send(error);
+        })
+}
+
 module.exports = {
-    user_create
+    user_create,
+    user_index
 }
