@@ -4,12 +4,16 @@ const router = express.Router();
 
 router.get('/notes', noteController.note_index);
 
-router.post('/notes', noteController.note_create_post);
+// router.post('/notes', noteController.note_create_post);
 
 router.get('/notes/create', noteController.note_create_get);
+
+router.get('/notes/create', noteController.note_create_lat);
 
 router.get('/notes/:id', noteController.note_details);
 
 router.delete('/notes/:id', noteController.note_delete);
+
+router.get('/notes/:userId/:latitude/:longitude/:body', noteController.note_create_post);
 
 module.exports = router;

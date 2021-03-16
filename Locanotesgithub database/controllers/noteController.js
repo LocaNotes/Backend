@@ -23,9 +23,25 @@ const note_details = (req, res) => {
 const note_create_get = (req,res) => {
     res.render('create', { title: 'Create a new note' });
 }
-const note_create_post = (req,res) => {
-    const newnote = new note(req.body);
+// const note_create_post = (req,res) => {
+//     const newnote = new note(req.body);
 
+//     newnote.save()
+//         .then((result) => {
+//             res.redirect('/notes');
+//         })
+//         .catch((err)=> {
+//             console.log(err);
+//         })
+// }
+
+const note_create_post = (req,res) => {
+    const userId = req.params.userId;
+    const latitude = req.params.latitude;
+    const longitude = req.params.longitude;
+    const body = req.params.body;
+    
+    let newnote = new note({title: userId, latitude: latitude, longitude: longitude,  body: body});
     newnote.save()
         .then((result) => {
             res.redirect('/notes');
@@ -33,6 +49,30 @@ const note_create_post = (req,res) => {
         .catch((err)=> {
             console.log(err);
         })
+}
+
+const note_create_lat = (req,res) => {
+    const newnote = new note(req.latitude);
+    newnote.save()
+    .then((result) => {
+        res.redirect('/notes');
+    })
+    .catch((err)=> {
+        console.log(err);
+    })
+}
+
+
+const note_create_long = (req,res) => {
+    const newnote = new note(req.longitude);
+    newnote.save()
+    .then((result) => {
+        res.redirect('/notes');
+    })
+    .catch((err)=> {
+        console.log(err);
+    })
+    
 }
 const note_delete = (req,res) => {
     const id = req.params.id;
@@ -51,5 +91,7 @@ module.exports = {
     note_details,
     note_create_get,
     note_create_post,
-    note_delete
+    note_delete,
+    note_create_lat,
+    note_create_long
 }
