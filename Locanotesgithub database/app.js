@@ -3,6 +3,7 @@ const morgan  = require('morgan');
 const mongoose = require('mongoose');
 const noteRoutes = require('./routes/noteRoutes');
 const loginRoutes = require('./routes/loginRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 //express app
 const app = express();
@@ -27,6 +28,8 @@ app.get('/', (req, res) => {
 app.use(noteRoutes);
 
 app.use(loginRoutes);
+
+app.use(userRoutes);
 
 //404 code last
 app.use((req, res) =>{
