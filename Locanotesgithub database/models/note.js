@@ -7,11 +7,11 @@ const noteSchema = new Schema({
         required: true
     },
     latitude: {
-        type: String,
+        type: Number,
         required: true
     },
     longitude: {
-        type: String,
+        type: Number,
         requried: true
     },
     body:{

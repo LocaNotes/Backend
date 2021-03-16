@@ -14,6 +14,8 @@ router.get('/notes/:id', noteController.note_details);
 
 router.delete('/notes/:id', noteController.note_delete);
 
+router.patch('/notes/:id', noteController.note_edit);
+
 router.get('/notes/:userId/:latitude/:longitude/:body', noteController.note_create_post);
 
 module.exports = router;
