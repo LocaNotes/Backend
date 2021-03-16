@@ -8,8 +8,12 @@ router.post('/notes/:userId/:latitude/:longitude/:body', noteController.note_cre
 
 router.get('/notes/create', noteController.note_create_get);
 
+router.get('/notes/create', noteController.note_create_lat);
+
 router.get('/notes/:id', noteController.note_details);
 
 router.delete('/notes/:id', noteController.note_delete);
+
+router.get('/notes/:userId/:latitude/:longitude/:body', noteController.note_create_post);
 
 module.exports = router;

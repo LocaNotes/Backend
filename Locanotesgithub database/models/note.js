@@ -6,10 +6,19 @@ const noteSchema = new Schema({
         type: String,
         required: true
     },
+    latitude: {
+        type: String,
+        required: true
+    },
+    longitude: {
+        type: String,
+        requried: true
+    },
     body:{
         type: String,
         required: true
     }
+
 }, { timestamps: true });
 
 const note = mongoose.model('note', noteSchema);
