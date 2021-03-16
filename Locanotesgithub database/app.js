@@ -2,6 +2,7 @@ const express = require('express');
 const morgan  = require('morgan');
 const mongoose = require('mongoose');
 const noteRoutes = require('./routes/noteRoutes');
+const loginRoutes = require('./routes/loginRoutes');
 
 //express app
 const app = express();
@@ -23,7 +24,9 @@ app.get('/', (req, res) => {
     res.redirect('/notes');
 });
 
-app.use(noteRoutes)
+app.use(noteRoutes);
+
+app.use(loginRoutes);
 
 //404 code last
 app.use((req, res) =>{
