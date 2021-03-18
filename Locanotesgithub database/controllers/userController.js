@@ -31,7 +31,20 @@ const user_index = (req, res) => {
         })
 }
 
+const user_delete = (req,res) => {
+    const id = req.params.id;
+
+    mongoUser.findByIdAndDelete(id)
+        .then(result => {
+            res.send(result);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
+
 module.exports = {
     user_create,
-    user_index
+    user_index,
+    user_delete
 }

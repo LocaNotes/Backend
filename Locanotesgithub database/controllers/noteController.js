@@ -36,12 +36,12 @@ const note_create_get = (req,res) => {
 // }
 
 const note_create_post = (req,res) => {
-    const userId = req.params.userId;
+    const title = req.params.userId;
     const latitude = req.params.latitude;
     const longitude = req.params.longitude;
     const body = req.params.body;
     
-    let newnote = new note({title: userId, latitude: latitude, longitude: longitude,  body: body});
+    let newnote = new note({title: title, latitude: latitude, longitude: longitude,  body: body});
     newnote.save()
         .then((result) => {
             res.redirect('/notes');
@@ -74,6 +74,23 @@ const note_create_long = (req,res) => {
     })
     
 }
+
+const note_edit = (req,res) => {
+    const id = req.params.id;
+    const title = req.params.userId;
+    const latitude = req.params.latitude;
+    const longitude = req.params.longitude;
+    const body = req.params.body;
+
+    note.findByIdAndUpdate({id: id, title: title, latitude: latitude, longitude: longitude,  body: body})
+    .then(result => {
+        res.json({redirect:'/notes:id'})
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
 const note_delete = (req,res) => {
     const id = req.params.id;
 
@@ -93,5 +110,6 @@ module.exports = {
     note_create_post,
     note_delete,
     note_create_lat,
-    note_create_long
+    note_create_long,
+    note_edit
 }
