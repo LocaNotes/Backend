@@ -77,13 +77,21 @@ const note_create_long = (req,res) => {
 
 const note_edit = (req,res) => {
     const id = req.params.id;
-    const title = req.params.userId;
-    const latitude = req.params.latitude;
-    const longitude = req.params.longitude;
-    const body = req.params.body;
+    const title = req.query.title;
+    const latitude = req.query.latitude;
+    const longitude = req.query.longitude;
+    const body = req.query.body;
 
-    note.findByIdAndUpdate({id: id, title: title, latitude: latitude, longitude: longitude,  body: body})
+    const updatenote = {
+        title: title,
+        latitude: latitude,
+        longitude: longitude,
+        body: body
+    }
+
+    note.findByIdAndUpdate(id,updatenote)
     .then(result => {
+        console.log(result);
         res.json({redirect:'/notes:id'})
     })
     .catch(err => {
