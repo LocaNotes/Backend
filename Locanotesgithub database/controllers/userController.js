@@ -8,7 +8,7 @@ const user_create = (req, res) => {
     const username = req.query.username;
     const password = req.query.password; 
 
-    const user = new mongoUser({firstName: firstName, lastName: lastName, email: email, username: username, password: password});
+    const user = new mongoUser({firstName: firstName, lastName: lastName, email: email, username: username, password: password, notes:[]});
 
     console.log('body:');
     console.log(req.body);

@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/notes', noteController.note_index);
 
-router.post('/notes/:userId/:latitude/:longitude/:body', noteController.note_create_post);
+router.post('/notes/:userId/:title/:latitude/:longitude/:body', noteController.note_create_post);
 
 router.get('/notes/create', noteController.note_create_get);
 

@@ -1,8 +1,10 @@
 // notes_sd
 const note = require('../models/note');
+const { findById } = require('../models/user');
+const user = require('../models/user');
 
 const note_index = (req, res) => {
-    note.find().sort({ createdAt: -1})
+    note.note.find().sort({ createdAt: -1})
     .then((result)=> {
         res.render('index',{title: 'All notes',notes: result })
     })
@@ -12,7 +14,7 @@ const note_index = (req, res) => {
 }
 const note_details = (req, res) => {
     const id = req.params.id;
-    note.findById(id)
+    note.note.findById(id)
         .then(result => {
             res.render('details', { note: result, title: 'note Details'});
         })
@@ -23,32 +25,24 @@ const note_details = (req, res) => {
 const note_create_get = (req,res) => {
     res.render('create', { title: 'Create a new note' });
 }
-// const note_create_post = (req,res) => {
-//     const newnote = new note(req.body);
-
-//     newnote.save()
-//         .then((result) => {
-//             res.redirect('/notes');
-//         })
-//         .catch((err)=> {
-//             console.log(err);
-//         })
-// }
 
 const note_create_post = (req,res) => {
-    const title = req.params.userId;
+    const userId = req.params.userId;
+    const title = req.params.title;
     const latitude = req.params.latitude;
     const longitude = req.params.longitude;
     const body = req.params.body;
     
-    let newnote = new note({title: title, latitude: latitude, longitude: longitude,  body: body});
-    newnote.save()
-        .then((result) => {
-            res.redirect('/notes');
-        })
-        .catch((err)=> {
-            console.log(err);
-        })
+    user.findOne({_id:userId})
+    .then(result => {
+        result.notes.push({title: title, latitude: latitude, longitude: longitude,  body: body});
+        result.save();
+        res.send(result);
+    })
+    .catch(error => {
+        res.send(error);
+    })
+    
 }
 
 const note_create_lat = (req,res) => {
@@ -102,7 +96,7 @@ const note_edit = (req,res) => {
 const note_delete = (req,res) => {
     const id = req.params.id;
 
-    note.findByIdAndDelete(id)
+    note.note.findByIdAndDelete(id)
         .then(result => {
             res.json({ redirect: '/notes'})
         })
