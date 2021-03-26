@@ -1,18 +1,19 @@
 const comment = require('../models/comment');
+const { findById } = require('../models/note');
+const note = require('../models/note');
 const { findById } = require('../models/user');
 const user = require('../models/user');
 
 
-const note_create_post = (req,res) => {
-    const userId = req.params.userId;
-    const title = req.params.title;
-    const latitude = req.params.latitude;
-    const longitude = req.params.longitude;
+const comment_create_post = (req,res) => {
+    const opuserId = req.params.userId
+    const comuserId = req.params.userId
+    const noteId = req.params.noteId;
     const body = req.params.body;
     
-    user.findOne({_id:userId})
+    note.findOne({_id:noteId})
     .then(result => {
-        result.notes.push({title: title, latitude: latitude, longitude: longitude,  body: body});
+        result.comments.push({body: body});
         result.save();
         res.send(result);
     })
