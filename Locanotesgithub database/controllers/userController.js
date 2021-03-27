@@ -21,6 +21,20 @@ const user_create = (req, res) => {
         })
 }
 
+const user_reset_email = (req, res) => {
+    const userId = req.params.id;
+
+    const email = req.query.email; 
+
+    mongoUser.findOneAndUpdate({_id: userId}, {email: email}).then(() => {
+        mongoUser.findById(userId).then(result => {
+            res.send(result);
+        })
+    }).catch(err => {
+        res.send(err);
+    });
+}
+
 const user_index = (req, res) => {
     mongoUser.find().sort({ createdAt: -1 })
         .then(result => {
@@ -45,6 +59,7 @@ const user_delete = (req,res) => {
 
 module.exports = {
     user_create,
+    user_reset_email,
     user_index,
     user_delete
 }

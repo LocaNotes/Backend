@@ -1,6 +1,5 @@
 // notes_sd
 const note = require('../models/note');
-const { findById } = require('../models/user');
 const user = require('../models/user');
 
 const note_index = (req, res) => {
