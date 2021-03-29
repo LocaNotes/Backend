@@ -24,13 +24,16 @@ const user_reset_email = (req, res) => {
 
     const email = req.query.email; 
 
-    mongoUser.findOneAndUpdate({_id: userId}, {email: email}).then(() => {
-        mongoUser.findById(userId).then(result => {
+    mongoUser.findById(userId).then(result => {
+        result.email = email;
+        result.save().then(result => {
             res.send(result);
+        }).catch(err => {
+            res.send(err);
         })
     }).catch(err => {
         res.send(err);
-    });
+    })
 }
 
 const user_reset_password = (req, res) => {
