@@ -35,6 +35,34 @@ const user_reset_email = (req, res) => {
     });
 }
 
+const user_reset_password = (req, res) => {
+    const userId = req.params.id;
+
+    const password = req.query.password; 
+
+    mongoUser.findOneAndUpdate({_id: userId}, {password: password}).then(() => {
+        mongoUser.findById(userId).then(result => {
+            res.send(result);
+        })
+    }).catch(err => {
+        res.send(err);
+    })
+}
+
+const user_reset_password = (req, res) => {
+    const userId = req.params.id;
+
+    const username = req.query.username; 
+
+    mongoUser.findOneAndUpdate({_id: userId}, {username: username}).then(() => {
+        mongoUser.findById(userId).then(result => {
+            res.send(result);
+        })
+    }).catch(err => {
+        res.send(err);
+    })
+}
+
 const user_index = (req, res) => {
     mongoUser.find().sort({ createdAt: -1 })
         .then(result => {
@@ -60,6 +88,8 @@ const user_delete = (req,res) => {
 module.exports = {
     user_create,
     user_reset_email,
+    user_reset_password,
+    user_reset_username,
     user_index,
     user_delete
 }

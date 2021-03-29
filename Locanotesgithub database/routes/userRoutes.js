@@ -4,7 +4,9 @@ const router = express.Router();
 
 router.post('/user', userController.user_create);
 
-router.post('/user/resetemail/:id', userController.user_reset_email)
+router.post('/user/resetemail/:id', userController.user_reset_email);
+
+router.psot('/user/resetpassword/:id', userController.user_reset_password);
 
 //router.post('/user/:firstName/:lastName/:email/:username/:password', userController.user_create);
 
