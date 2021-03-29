@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const blockUserSchema = new Schema({
     userId: {
-        type: Number,
+        type: String,
         required: true
     },
     blockUserId: {
-        type: Number,
+        type: String,
         required: true
     }
 }, { timestamps: true });
