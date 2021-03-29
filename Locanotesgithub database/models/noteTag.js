@@ -8,5 +8,5 @@ const noteTagSchema = new Schema ({
     }
 }, {timestamps: true});
 
-const noteTag = mongoose.model('noteTag', noteTageSchema);
-module.exports = {noteTagSchema, noteTag};
+const noteTag = mongoose.model('noteTag', noteTagSchema);
+module.exports = noteTag;

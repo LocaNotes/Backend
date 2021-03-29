@@ -9,4 +9,4 @@ const privacySchema = new Schema({
 },{timestamps: true});
 
 const privacy = mongoose.model('privacy', privacySchema)
-module.exports = {privacySchema, privacy};
+module.exports = privacy;

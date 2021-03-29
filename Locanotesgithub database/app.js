@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const noteRoutes = require('./routes/noteRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const userRoutes = require('./routes/userRoutes');
+const privacyRoutes = require('./routes/privacyRoutes');
+const noteTagRoutes = require('./routes/noteTagRoutes');
 
 //express app
 const app = express();
@@ -15,7 +17,6 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true})
     
 //register view engine
 app.set('view engine', 'ejs');
-
 
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
@@ -30,6 +31,10 @@ app.use(noteRoutes);
 app.use(loginRoutes);
 
 app.use(userRoutes);
+
+app.use('/privacy', privacyRoutes);
+
+app.use('/notetag', noteTagRoutes);
 
 //404 code last
 app.use((req, res) =>{
