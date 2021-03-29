@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const userNote = require('../models/note');
-userNote.noteSchema;
+const note = require('../models/note');
 
 const userSchema = new Schema({
     firstName: {
@@ -23,12 +22,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    },
-    notes: {
-        type: [userNote.noteSchema],
-        required: true
     }
-
 }, { timestamps: true });
 
 const user = mongoose.model('user', userSchema);
