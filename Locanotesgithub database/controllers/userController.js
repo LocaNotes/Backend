@@ -49,7 +49,7 @@ const user_reset_password = (req, res) => {
     })
 }
 
-const user_reset_password = (req, res) => {
+const user_reset_username = (req, res) => {
     const userId = req.params.id;
 
     const username = req.query.username; 
