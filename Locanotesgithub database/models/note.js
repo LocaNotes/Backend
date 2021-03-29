@@ -37,11 +37,11 @@ const noteSchema = new Schema({
         required: true
     }, 
     downvotes: {
-        type: Integer, 
+        type: Number, 
         required: true 
     },
     upvotes: {
-        type: Integer, 
+        type: Number, 
         required: true 
     }
 }, { timestamps: true });
