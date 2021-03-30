@@ -6,7 +6,7 @@ const blockUserSchema = new Schema({
         type: String,
         required: true
     },
-    blockUserId: {
+    blockedUserId: {
         type: String,
         required: true
     }
