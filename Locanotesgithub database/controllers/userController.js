@@ -8,9 +8,10 @@ const user_create = (req, res) => {
     const lastName = req.query.lastName;
     const email = req.query.email;
     const username = req.query.username;
-    const password = req.query.password; 
+    const password = req.query.password;
+    const bio = req.query.bio
 
-    const user = new mongoUser({firstName: firstName, lastName: lastName, email: email, username: username, password: password});
+    const user = new mongoUser({firstName: firstName, lastName: lastName, email: email, username: username, password: password, bio: bio});
 
     user.save()
         .then(result => {
@@ -138,6 +139,22 @@ const user_reset_username = (req, res) => {
     })
 }
 
+const user_update_info = (req,res) => {
+    const userId = req.params.id;
+
+    const firstName = req.query.firstName;
+    const lastName = req.query.lastName;
+    const bio = req.query.bio;
+
+    mongoUser.findByIdAndUpdate({_id: userId}, {firstName: firstName, lastName: lastName, bio:bio}).then(() =>{
+        mongoUser.findById(userId).then(result => {
+            res.send(result);
+        })
+    }).catch(err => {
+        res.send(err);
+    })
+}
+
 const user_index = (req, res) => {
     mongoUser.find().sort({ createdAt: -1 })
         .then(result => {
@@ -167,6 +184,7 @@ module.exports = {
     user_reset_email,
     user_reset_password,
     user_reset_username,
+    user_update_info,
     user_index,
     user_delete
 }

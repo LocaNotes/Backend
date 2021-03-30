@@ -14,6 +14,8 @@ router.patch('/user/resetpassword/:id', userController.user_reset_password);
 
 router.patch('/user/resetusername/:id', userController.user_reset_username);
 
+router.patch('/user/updateuserinfo/:id', userController.user_update_info);
+
 //router.post('/user/:firstName/:lastName/:email/:username/:password', userController.user_create);
 
 router.get('/user', userController.user_index);
