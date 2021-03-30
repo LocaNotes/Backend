@@ -128,7 +128,7 @@ const note_edit = (req,res) => {
 const note_delete = (req, res) => {
     const id = req.params.id;
 
-    note.note.findByIdAndDelete(id).then(result => {
+    note.findByIdAndDelete(id).then(result => {
         res.send(result);
     }).catch(err => {
         console.log(err);
