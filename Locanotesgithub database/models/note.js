@@ -43,7 +43,12 @@ const noteSchema = new Schema({
     upvotes: {
         type: Number, 
         required: true 
+    },
+    comment: {
+        type: String,
+        required: false
     }
+    
 }, { timestamps: true });
 
 const note = mongoose.model('note', noteSchema);

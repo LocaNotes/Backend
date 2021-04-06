@@ -41,6 +41,7 @@ const note_create_post = (req,res) => {
     const isStory = req.query.isStory;
     const downvotes = req.query.downvotes;
     const upvotes = req.query.upvotes;
+    const comment = req.query.comment;
 
     const model = {
         userId: userId, 
@@ -52,7 +53,8 @@ const note_create_post = (req,res) => {
         body: body,
         isStory: isStory,  
         downvotes: downvotes, 
-        upvotes: upvotes
+        upvotes: upvotes,
+        comment: comment
     }
 
     const newNote = new note(model);
@@ -102,6 +104,7 @@ const note_edit = (req,res) => {
     const isStory = req.query.isStory;
     const downvotes = req.query.downvotes;
     const upvotes = req.query.upvotes;
+    const comment = req.query.comment;
 
     note.findById(noteId).then(result => {
         result.userId = userId;
@@ -114,6 +117,7 @@ const note_edit = (req,res) => {
         result.isStory = isStory; 
         result.downvotes = downvotes; 
         result.upvotes = upvotes;
+        result.comment = comment;
 
         result.save().then(result => {
             res.send(result);

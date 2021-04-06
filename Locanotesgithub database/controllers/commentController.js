@@ -1,19 +1,20 @@
 const comment = require('../models/comment');
-const { findById } = require('../models/note');
-const note = require('../models/note');
-const { findById } = require('../models/user');
-const user = require('../models/user');
 
+const comment_index = (req, res) => {
+    comment.find().sort({createdAt: -1}).then(result => {
+        res.send(result);
+    }).catch(err => {
+        res.send(err);
+    })
+}
 
 const comment_create_post = (req,res) => {
-    const opuserId = req.params.userId
-    const comuserId = req.params.userId
-    const noteId = req.params.noteId;
+    const comuserId = req.query.userId
+    const noteId = req.query.noteId;
     const body = req.query.body;
     
-    note.findOne({_id:noteId})
-    .then(result => {
-        result.comments.push({userId: comuserId}, {body: body});
+    note.findById(noteId).then(result => {
+        result.comment.push({userId: comuserId}, {body: body});
         result.save();
         res.send(result);
     })
