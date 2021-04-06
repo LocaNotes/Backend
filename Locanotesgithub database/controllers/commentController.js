@@ -9,22 +9,48 @@ const comment_index = (req, res) => {
 }
 
 const comment_create_post = (req,res) => {
-    const comuserId = req.query.userId
+    const userId = req.query.userId
     const noteId = req.query.noteId;
     const body = req.query.body;
-    
+
+    const model = {
+        userId: userId,
+        noteId: noteId,
+        body: body
+    }
+
+        const newComment = new comment(model);
+
+        newComment.save().then(result => {
+            res.send(result);
+        }).catch(error => {
+            res.send(error);
+        });
+}
+
+const comment_edit = (req,res) => {
+    const userId = req.params.id;
+    const noteId = req.query.userId;
+    const body = req.query.userId;
+
     note.findById(noteId).then(result => {
-        result.comment.push({userId: comuserId}, {body: body});
-        result.save();
-        res.send(result);
-    })
-    .catch(error => {
-        res.send(error);
-    })
-    
+        result.userId = userId;
+        result.noteId = noteId;
+        result.body = body;
+
+        result.save().then(result => {
+            res.send(result);
+        }).catch(err => {
+            res.send(err);
+        });
+    }).catch(err => {
+        res.send(err);
+    });
 }
 
 module.exports = {
+    comment_index,
     comment_create_post,
+    comment_edit,
 
 }

@@ -6,6 +6,8 @@ const loginRoutes = require('./routes/loginRoutes');
 const userRoutes = require('./routes/userRoutes');
 const privacyRoutes = require('./routes/privacyRoutes');
 const noteTagRoutes = require('./routes/noteTagRoutes');
+const commentRoutes = require('./routes/commentRoutes');
+const friendRoutes = require('./routes/friendRoutes');
 
 //express app
 const app = express();
@@ -35,6 +37,10 @@ app.use(userRoutes);
 app.use('/privacy', privacyRoutes);
 
 app.use('/notetag', noteTagRoutes);
+
+app.use(commentRoutes);
+
+app.use(friendRoutes);
 
 //404 code last
 app.use((req, res) =>{

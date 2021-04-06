@@ -1,21 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const commentSchema = new Schema({
+const friendSchema = new Schema({
     userId: {
         type: String,
         required: true
     },
-    noteId: {
-        type: String,
-        required: true
-    },
-    body:{
+    friendUserId: {
         type: String,
         required: true
     }
-
 }, { timestamps: true });
 
-const comment = mongoose.model('comment', commentSchema);
-module.exports = comment;
+const friend = mongoose.model('friend', friendSchema);
+module.exports = friend;
