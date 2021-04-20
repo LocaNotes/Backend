@@ -1,11 +1,21 @@
 const comment = require('../models/comment');
 
 const comment_index = (req, res) => {
-    comment.find().sort({createdAt: -1}).then(result => {
-        res.send(result);
-    }).catch(err => {
-        res.send(err);
-    })
+    const userId = req.query.userId;
+    if (userId !== undefined) {
+        comment.find({ userId: userId }).sort({ createdAt: -1}).then(result => {
+            res.send(result);
+        }).catch(err => {
+            console.log(err);
+            res.send(err);
+        })
+    } else {
+        comment.find().sort({createdAt: -1}).then(result => {
+            res.send(result);
+        }).catch(err => {
+            res.send(err);
+        })
+    }
 }
 
 const comment_create_post = (req,res) => {
