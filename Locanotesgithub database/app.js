@@ -9,6 +9,8 @@ const noteTagRoutes = require('./routes/noteTagRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const friendRoutes = require('./routes/friendRoutes');
 const shareRoutes = require('./routes/shareRoutes');
+const upvoteRoutes = require('./routes/upvoteRoutes');
+const downvoteRoutes = require('./routes/downvoteRoutes');
 
 //express app
 const app = express();
@@ -44,6 +46,10 @@ app.use(commentRoutes);
 app.use(friendRoutes);
 
 app.use(shareRoutes);
+
+app.use('/upvote', upvoteRoutes);
+
+app.use('/downvote', downvoteRoutes);
 
 //404 code last
 app.use((req, res) =>{
