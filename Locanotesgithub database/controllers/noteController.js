@@ -1,16 +1,46 @@
 // notes_sd
 const note = require('../models/note');
+const privacy = require('../models/privacy');
 
 const note_index = (req, res) => {
-    note.find().sort({ createdAt: -1})
-    .then((result)=> {
-        //res.render('index',{title: 'All notes',notes: result })
-        res.send(result);
-    })
-    .catch((err)=> {
-        console.log(err);
-        res.send(err);
-    })
+    const userId = req.query.userId;
+    const public = req.query.public;
+
+    if (userId !== undefined) {
+        note.find({ userId: userId }).sort({ createdAt: -1}).then(result => {
+            res.send(result);
+        }).catch(err => {
+            console.log(err);
+            res.send(err);
+        })
+    } else if (public === true) {
+        privacy.aggregate([
+            { "$match": { "label": "public" }}
+        ]).then(result => {
+            // console.log(typeof(result[0]._id));
+            // console.log(typeof(String(result[0]._id)));
+            // console.log(result[0]._id);
+            note.aggregate([
+                { "$match": { "privacyId": String(result[0]._id) }}
+            ]).then(result => {
+                res.send(result);
+            }).catch(err => {
+                res.send(err);
+            })
+        }).catch(err => {
+            res.send(err);
+        })
+    } else {
+        note.find().sort({ createdAt: -1})
+        .then((result)=> {
+            //res.render('index',{title: 'All notes',notes: result })
+            res.send(result);
+        })
+        .catch((err)=> {
+            console.log(err);
+            res.send(err);
+        })
+    }
 }
 
 const note_details = (req, res) => {
