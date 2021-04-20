@@ -13,7 +13,7 @@ const note_index = (req, res) => {
             console.log(err);
             res.send(err);
         })
-    } else if (public === true) {
+    } else if (public === "true") {
         privacy.aggregate([
             { "$match": { "label": "public" }}
         ]).then(result => {
