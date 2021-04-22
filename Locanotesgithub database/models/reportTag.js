@@ -8,5 +8,5 @@ const reportTagSchema = new Schema({
     }
 } , { timestamps: true });
 
-const reportTag = mongoose.model('report', reportTagSchema);
+const reportTag = mongoose.model('reportTag', reportTagSchema);
 module.exports = reportTag;

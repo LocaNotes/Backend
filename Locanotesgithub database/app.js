@@ -12,6 +12,7 @@ const shareRoutes = require('./routes/shareRoutes');
 const upvoteRoutes = require('./routes/upvoteRoutes');
 const downvoteRoutes = require('./routes/downvoteRoutes');
 const reportTagRoutes = require('./routes/reportTagRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
 //express app
 const app = express();
@@ -53,6 +54,8 @@ app.use('/upvote', upvoteRoutes);
 app.use('/downvote', downvoteRoutes);
 
 app.use('/reporttag', reportTagRoutes);
+
+app.use('/report', reportRoutes);
 
 //404 code last
 app.use((req, res) =>{
