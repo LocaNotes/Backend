@@ -2,11 +2,18 @@ const comment = require('../models/comment');
 
 const comment_index = (req, res) => {
     const userId = req.query.userId;
+    const noteId = req.query.noteId;
     if (userId !== undefined) {
         comment.find({ userId: userId }).sort({ createdAt: -1}).then(result => {
             res.send(result);
         }).catch(err => {
             console.log(err);
+            res.send(err);
+        })
+    } else if (noteId !== undefined) {
+        comment.find({ noteId: noteId }).sort({ createdAt: -1}).then(result => {
+            res.send(result);
+        }).catch(err => {
             res.send(err);
         })
     } else {
