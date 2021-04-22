@@ -156,13 +156,20 @@ const user_update_info = (req,res) => {
 }
 
 const user_index = (req, res) => {
-    mongoUser.find().sort({ createdAt: -1 })
-        .then(result => {
+    const userId = req.query.userId; 
+    if (userId !== undefined) {
+        mongoUser.find({ _id: userId }).then(result => {
             res.send(result);
+        }).catch(err => {
+            res.send(err);
         })
-        .catch(error => {
+    } else {
+        mongoUser.find().sort({ createdAt: -1 }).then(result => {
+            res.send(result);
+        }).catch(error => {
             res.send(error);
         })
+    }
 }
 
 const user_delete = (req,res) => {
