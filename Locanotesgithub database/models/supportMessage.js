@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schme = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const supportMessageSchema = new mongoose.Schema({
+const supportMessageSchema = new Schema({
     userId: {
         type: Number,
         required: true

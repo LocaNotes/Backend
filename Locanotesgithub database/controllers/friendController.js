@@ -9,7 +9,7 @@ const friend_index = (req, res) => {
 }
 
 const friend_add = (req,res) => {
-    const userId = req.query.userId
+    const userId = req.query.userId;
     const friendUserId = req.query.friendUserId;
 
     const model = {

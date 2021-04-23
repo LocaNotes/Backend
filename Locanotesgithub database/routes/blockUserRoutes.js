@@ -2,4 +2,7 @@ const express = require('express');
 const blockUserController = require('../controllers/blockUserController');
 const router = express.Router();
 
-router.get('/blockUser', blockUserController.blockUser_create_block);
+router.post('/block', blockUserController.block_add);
+router.get('/block', blockUserController.blocked_index);
+
+module.exports = router;
