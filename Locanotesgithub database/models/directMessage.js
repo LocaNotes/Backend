@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 
 const directMessageSchema = new Schema({
     userId: {
-        type: Number,
+        type: String,
         required: true
     },
     recieverId:{
         type:String,
         required: true
     },
-    message: {
+    body: {
         type: String,
         required: true
     }

@@ -15,6 +15,7 @@ const reportTagRoutes = require('./routes/reportTagRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const blockUserRoutes = require('./routes/blockUserRoutes');
 const supportMessageRoutes = require('./routes/supportMessageRoutes');
+const directMessageRoutes = require('./routes/directMessageRoutes');
 
 //express app
 const app = express();
@@ -62,6 +63,9 @@ app.use('/report', reportRoutes);
 app.use(blockUserRoutes);
 
 app.use(supportMessageRoutes);
+
+app.use(directMessageRoutes);
+
 
 //404 code last
 app.use((req, res) =>{
