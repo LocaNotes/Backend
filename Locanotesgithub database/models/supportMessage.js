@@ -2,8 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const supportMessageSchema = new Schema({
+    ticket: {
+        type:Number,
+        required: true
+    },
     userId: {
-        type: Number,
+        type: String,
         required: true
     },
     message: {
