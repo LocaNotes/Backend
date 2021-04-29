@@ -3,7 +3,7 @@ const mongoUser = require('../models/user');
 const userForgetPassword = require('../models/userForgetPassword');
 const nodemailer = require('nodemailer');
 
-const user_create = (req, res) => {
+const user_create = async (req, res) => {
     const firstName = req.query.firstName;
     const lastName = req.query.lastName;
     const email = req.query.email;
@@ -11,15 +11,42 @@ const user_create = (req, res) => {
     const password = req.query.password;
     const bio = req.query.bio
 
-    const user = new mongoUser({firstName: firstName, lastName: lastName, email: email, username: username, password: password, bio: bio});
+    let emailIsTaken = false;
+    let usernameIsTaken = false;
 
-    user.save()
-        .then(result => {
+    await mongoUser.find({ email: email }).then(result => {
+        if (result.length > 0) {
+            emailIsTaken = true;
+        }
+    }).catch(err => {
+        console.log('error checking if email was taken');
+        emailIsTaken = true;
+    })
+
+    await mongoUser.find({ username: username }).then(result => {
+        if (result.length > 0) {
+            usernameIsTaken = true;
+        }
+    }).catch(err => {
+        console.log('error checking if username was taken');
+        usernameIsTaken = true;
+    })
+
+    if (emailIsTaken) {
+        const response = JSON.stringify({email: 'taken'});
+        res.send(response);
+    } else if (usernameIsTaken) {
+        const response = JSON.stringify({username: 'taken'});
+        res.send(response);
+    } else {
+        const user = new mongoUser({firstName: firstName, lastName: lastName, email: email, username: username, password: password, bio: bio});
+
+        user.save().then(result => {
             res.send(result);
-        })
-        .catch(error => {
+        }).catch(error => {
             res.send(error);
         })
+    }
 }
 
 const user_forgot_password = (req, res) => {
@@ -94,21 +121,37 @@ const user_verify_temporary_password = (req, res) => {
     });
 }
 
-const user_reset_email = (req, res) => {
+const user_reset_email = async (req, res) => {
     const userId = req.params.id;
 
     const email = req.query.email; 
 
-    mongoUser.findById(userId).then(result => {
-        result.email = email;
-        result.save().then(result => {
-            res.send(result);
+    let emailIsTaken = false;
+
+    await mongoUser.find({ email: email }).then(result => {
+        if (result.length > 0) {
+            emailIsTaken = true;
+        }
+    }).catch(err => {
+        console.log('error checking if email was taken');
+        emailIsTaken = true;
+    })
+
+    if (emailIsTaken) {
+        const response = JSON.stringify({email: 'taken'});
+        res.send(response);
+    } else {
+        mongoUser.findById(userId).then(result => {
+            result.email = email;
+            result.save().then(result => {
+                res.send(result);
+            }).catch(err => {
+                res.send(err);
+            })
         }).catch(err => {
             res.send(err);
         })
-    }).catch(err => {
-        res.send(err);
-    })
+    }
 }
 
 const user_reset_password = (req, res) => {
@@ -125,18 +168,34 @@ const user_reset_password = (req, res) => {
     })
 }
 
-const user_reset_username = (req, res) => {
+const user_reset_username = async (req, res) => {
     const userId = req.params.id;
 
     const username = req.query.username; 
 
-    mongoUser.findOneAndUpdate({_id: userId}, {username: username}).then(() => {
-        mongoUser.findById(userId).then(result => {
-            res.send(result);
-        })
+    let usernameIsTaken = false;
+
+    await mongoUser.find({ username: username }).then(result => {
+        if (result.length > 0) {
+            usernameIsTaken = true;
+        }
     }).catch(err => {
-        res.send(err);
+        console.log('error checking if email was taken');
+        usernameIsTaken = true;
     })
+
+    if (usernameIsTaken) {
+        const response = JSON.stringify({username: 'taken'});
+        res.send(response);
+    } else {
+        mongoUser.findOneAndUpdate({_id: userId}, {username: username}).then(() => {
+            mongoUser.findById(userId).then(result => {
+                res.send(result);
+            })
+        }).catch(err => {
+            res.send(err);
+        })
+    }
 }
 
 const user_update_info = (req,res) => {
@@ -157,8 +216,18 @@ const user_update_info = (req,res) => {
 
 const user_index = (req, res) => {
     const userId = req.query.userId; 
+    const username = req.query.username;
     if (userId !== undefined) {
         mongoUser.find({ _id: userId }).then(result => {
+            res.send(result);
+        }).catch(err => {
+            res.send(err);
+        })
+    } else if (username !== undefined) {
+        mongoUser.find({ username: username }).then(result => {
+            if (result.length == 0) {
+                console.log('yo');
+            }
             res.send(result);
         }).catch(err => {
             res.send(err);
