@@ -25,8 +25,20 @@ const share_post = (req,res) => {
         });
 }
 
+const share_search = (req,res) => {
+    const recieverId = req.params.recieverId
+        share.find({recieverId:recieverId}).then(result => {
+            res.send(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.send(err);
+        });
+}
+
 module.exports = {
     share_index,
     share_post,
+    share_search,
 
 }
