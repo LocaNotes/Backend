@@ -4,7 +4,21 @@ const privacy = require('../models/privacy');
 
 const note_index = (req, res) => {
     const userId = req.query.userId;
-    const public = req.query.public;
+    // const public = req.query.public;
+    const privacyOption = req.query.privacyOption;
+    const isStory = req.query.isStory;
+    let storyOption;
+    switch (isStory) {
+        case "true":
+            storyOption = true;
+            break;
+        case "false":
+            storyOption = false;
+            break;
+        default:
+            storyOption = undefined;
+            break;
+    }
 
     if (userId !== undefined) {
         note.find({ userId: userId }).sort({ createdAt: -1}).then(result => {
@@ -13,13 +27,44 @@ const note_index = (req, res) => {
             console.log(err);
             res.send(err);
         })
-    } else if (public === "true") {
+    } else if (storyOption !== undefined && privacyOption !== undefined) {
         privacy.aggregate([
-            { "$match": { "label": "public" }}
+            { "$match": { "label": privacyOption }}
         ]).then(result => {
-            // console.log(typeof(result[0]._id));
-            // console.log(typeof(String(result[0]._id)));
-            // console.log(result[0]._id);
+            note.aggregate([
+                { 
+                    "$match": { 
+                        "privacyId": String(result[0]._id),
+                        "isStory": storyOption
+                    }
+                }
+            ]).then(result => {
+                if (storyOption === true) {
+                    let notes = [];
+                    let currentDate = new Date();
+                    for (let i = 0; i < result.length; i++) {
+                        const story = result[i];
+                        let storyCreatedAt = story.createdAt;
+                        let storyDate = new Date(storyCreatedAt)
+                        const differenceInSeconds = (currentDate.getTime() - storyDate.getTime()) / 1000;
+                        if (differenceInSeconds < 86400) {
+                            notes.push(story);
+                        }
+                    }
+                    res.send(notes);
+                } else {
+                    res.send(result);
+                }
+            }).catch(err => {
+                res.send(err);
+            })
+        }).catch(err => {
+            res.send(err);
+        })
+    } else if (privacyOption !== undefined) {
+        privacy.aggregate([
+            { "$match": { "label": privacyOption }}
+        ]).then(result => {
             note.aggregate([
                 { "$match": { "privacyId": String(result[0]._id) }}
             ]).then(result => {
@@ -33,7 +78,6 @@ const note_index = (req, res) => {
     } else {
         note.find().sort({ createdAt: -1})
         .then((result)=> {
-            //res.render('index',{title: 'All notes',notes: result })
             res.send(result);
         })
         .catch((err)=> {
