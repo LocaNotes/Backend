@@ -26,6 +26,10 @@ const userSchema = new Schema({
     bio: {
         type: String,
         required: false
+    },
+    radius: {
+        type: Number, 
+        required: true
     }
 }, { timestamps: true });
 

@@ -22,4 +22,6 @@ router.get('/user', userController.user_index);
 
 router.delete('/user/:id', userController.user_delete);
 
+router.patch('/user/updateuserradius/:id', userController.user_update_radius);
+
 module.exports = router;

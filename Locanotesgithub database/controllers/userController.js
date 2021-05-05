@@ -39,7 +39,15 @@ const user_create = async (req, res) => {
         const response = JSON.stringify({username: 'taken'});
         res.send(response);
     } else {
-        const user = new mongoUser({firstName: firstName, lastName: lastName, email: email, username: username, password: password, bio: bio});
+        const user = new mongoUser({
+            firstName: firstName, 
+            lastName: lastName, 
+            email: email, 
+            username: username, 
+            password: password, 
+            bio: bio,
+            radius: 50
+        });
 
         user.save().then(result => {
             res.send(result);
@@ -253,6 +261,21 @@ const user_delete = (req,res) => {
         })
 }
 
+const user_update_radius = (req, res) => {
+    const userId = req.params.id;
+    const radius = req.query.radius;
+
+    mongoUser.findByIdAndUpdate(userId, {radius: radius}).then(_ => {
+        mongoUser.findById(userId).then(result => {
+            res.send(result);
+        }).catch(err => {
+            res.send(err);
+        })
+    }).catch(err => {
+        res.send(err);
+    })
+}
+
 module.exports = {
     user_create,
     user_forgot_password,
@@ -262,5 +285,6 @@ module.exports = {
     user_reset_username,
     user_update_info,
     user_index,
-    user_delete
+    user_delete,
+    user_update_radius
 }
