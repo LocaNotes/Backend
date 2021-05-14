@@ -1,3 +1,8 @@
+/*
+
+** MAIN FUNCTION **
+
+*/
 const express = require('express');
 const morgan  = require('morgan');
 const mongoose = require('mongoose');
@@ -16,6 +21,7 @@ const reportRoutes = require('./routes/reportRoutes');
 const blockUserRoutes = require('./routes/blockUserRoutes');
 const supportMessageRoutes = require('./routes/supportMessageRoutes');
 const directMessageRoutes = require('./routes/directMessageRoutes');
+// Above gets all the routes
 
 //express app
 const app = express();
@@ -36,6 +42,7 @@ app.get('/', (req, res) => {
     res.redirect('/notes');
 });
 
+// below uses route functionality
 app.use(noteRoutes);
 
 app.use(loginRoutes);

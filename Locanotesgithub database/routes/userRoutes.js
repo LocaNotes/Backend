@@ -1,7 +1,10 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const router = express.Router();
-
+/*
+    Routes are how the service creates GET and POST requests
+    Inside the routes certain functions have different requests such ad Delete or Patch
+*/
 router.post('/user', userController.user_create);
 
 router.post('/user/forgotpassword', userController.user_forgot_password);

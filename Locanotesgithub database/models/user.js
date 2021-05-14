@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const note = require('../models/note');
-
+/*
+    Each of these models Follow the same base line for the Schema everything follows this
+    this is for the User function
+*/
 const userSchema = new Schema({
     firstName: {
         type: String,

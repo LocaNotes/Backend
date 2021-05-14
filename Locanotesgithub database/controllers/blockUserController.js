@@ -1,6 +1,9 @@
 const blockUser = require('../models/blockUser');
 const user = require('../models/user');
-
+/*
+    A Controller is basically the "guts" of the program this is where index is formed which all controllers have
+    As well as create functionalities and other functionalities specific for them.
+*/
 const blocked_index = (req, res) => {
     blockUser.find().sort({createdAt: -1}).then(result => {
         res.send(result);

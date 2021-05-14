@@ -1,8 +1,12 @@
+// Imports 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const userComment = require('../models/comment.js');
 userComment.commentSchema;
-
+/*
+    Each of these models Follow the same base line for the Schema everything follows this
+    this is for the note function
+*/
 const noteSchema = new Schema({
     userId: {
         type: String, 
@@ -45,6 +49,6 @@ const noteSchema = new Schema({
         required: true 
     }
 }, { timestamps: true });
-
+//exports
 const note = mongoose.model('note', noteSchema);
 module.exports = note;
